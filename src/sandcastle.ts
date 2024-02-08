@@ -42,7 +42,6 @@ export class Sandcastle {
     this.ground = new THREE.Mesh(groundGeo, groundMaterial);
     this.ground.rotateX(-Math.PI / 2);
     this.ground.position.y = 1.2;
-    this.ground.position.z = 0;
 
     this.scene.add(this.ground);
   }
