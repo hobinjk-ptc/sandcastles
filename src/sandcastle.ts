@@ -64,10 +64,10 @@ export class Sandcastle {
 
   async loadBuildingMaterial() {
     const exrLoader = new EXRLoader();
-    const aoMap = await exrLoader.loadAsync('/assets/asphalt_04_1k/textures/asphalt_04_ao_1k.exr');
+    const aoMap = await exrLoader.loadAsync('./assets/asphalt_04_1k/textures/asphalt_04_ao_1k.exr');
     // const map = await exrLoader.loadAsync('/assets/asphalt_04_1k/textures/asphalt_04_diff_1k.exr');
-    const roughnessMap = await exrLoader.loadAsync('/assets/asphalt_04_1k/textures/asphalt_04_rough_1k.exr');
-    const normalMap = await exrLoader.loadAsync('/assets/asphalt_04_1k/textures/asphalt_04_nor_gl_1k.exr');
+    const roughnessMap = await exrLoader.loadAsync('./assets/asphalt_04_1k/textures/asphalt_04_rough_1k.exr');
+    const normalMap = await exrLoader.loadAsync('./assets/asphalt_04_1k/textures/asphalt_04_nor_gl_1k.exr');
     let material = new THREE.MeshStandardMaterial({
       aoMap,
       // map,
