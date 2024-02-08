@@ -20,9 +20,10 @@ export class Sandcastle {
   ground: THREE.Mesh;
   groundWidth = 1.2;
   groundDepth = 1.2;
-  groundWidthSegments = 64;
-  groundDepthSegments = 64;
-  bigScale = 20000;
+  groundWidthSegments = 32;
+  groundDepthSegments = 32;
+  bigScale = 80000;
+  durationScale = 80000;
 
   buildingMaterial: THREE.MeshStandardMaterial|undefined;
 
@@ -40,8 +41,8 @@ export class Sandcastle {
     });
     this.ground = new THREE.Mesh(groundGeo, groundMaterial);
     this.ground.rotateX(-Math.PI / 2);
-    this.ground.position.y = 0.8;
-    this.ground.position.z = -1;
+    this.ground.position.y = 1.2;
+    this.ground.position.z = 0;
 
     this.scene.add(this.ground);
   }
@@ -171,7 +172,7 @@ export class Sandcastle {
     let delay = Math.random() * 5000;
     let animation = {
       startTime: time + delay,
-      duration: diff.length() * 20000,
+      duration: diff.length() * this.durationScale,
       start: building.mesh.position.clone(),
       end: end,
     };

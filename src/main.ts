@@ -7,11 +7,16 @@ import {loadSkybox} from './skybox.ts';
 const width = window.innerWidth, height = window.innerHeight;
 
 async function main() {
-  const camera = new THREE.PerspectiveCamera(70, width / height, 0.1, 100000);
-  camera.position.y = 1;
+  const camera = new THREE.PerspectiveCamera(70, width / height, 0.1, 1000000);
+  camera.position.y = 2;
+  camera.position.z = 1;
   camera.lookAt(0, 1, -2);
 
   const scene = new THREE.Scene();
+
+  // const fog = new THREE.Fog(0xcce0ec, 1000, 80000);
+  const fog = new THREE.Fog(0xcce0ec, 1000, 200000);
+  scene.fog = fog;
 
   const sandcastle = new Sandcastle(scene);
   await sandcastle.loadBuildingMaterial();
