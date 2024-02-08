@@ -115,7 +115,14 @@ export class Sandcastle {
       const bigMesh = mesh.clone();
       bigMesh.material = this.buildingMaterialBig!;
       this.scene.add(bigMesh);
-      bigMesh.scale.set(this.bigScale, this.bigScale, this.bigScale);
+      let oneWidth = this.groundWidth / this.groundWidthSegments;
+      let bigWidth = this.bigScale * oneWidth - 12;
+      // Scale adjusted down so that cubes don't intersect with home platform
+      bigMesh.scale.set(
+        bigWidth / oneWidth,
+        bigWidth / oneWidth,
+        bigWidth / oneWidth
+      );
       this.buildings.push({
         mesh,
         bigMesh,
