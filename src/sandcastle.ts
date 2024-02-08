@@ -23,9 +23,10 @@ export class Sandcastle {
   groundWidthSegments = 32;
   groundDepthSegments = 32;
   bigScale = 80000;
-  durationScale = 80000;
+  durationScale = 120000;
 
   buildingMaterial: THREE.MeshStandardMaterial|undefined;
+  buildingMaterialBig: THREE.MeshStandardMaterial|undefined;
 
   buildings: Array<Building> = [];
   lastUpdate = 0;
@@ -64,9 +65,20 @@ export class Sandcastle {
 
   async loadBuildingMaterial() {
     const exrLoader = new EXRLoader();
-    const aoMap = await exrLoader.loadAsync('asphalt_04_ao_4k.exr');
-    const roughnessMap = await exrLoader.loadAsync('asphalt_04_rough_4k.exr');
-    const normalMap = await exrLoader.loadAsync('asphalt_04_nor_gl_4k.exr');
+    const aoMap = await exrLoader.loadAsync('asphalt_04_ao_1k.exr');
+    const roughnessMap = await exrLoader.loadAsync('asphalt_04_rough_1k.exr');
+    const normalMap = await exrLoader.loadAsync('asphalt_04_nor_gl_1k.exr');
+    const biggify = (texture: THREE.Texture) => {
+      let texBig = texture.clone();
+      texBig.wrapS = THREE.RepeatWrapping;
+      texBig.wrapT = THREE.RepeatWrapping;
+      texBig.repeat.set(100000, 100000);
+      return texBig;
+    };
+    const aoMapBig = biggify(aoMap);
+    const roughnessMapBig = biggify(roughnessMap);
+    const normalMapBig = biggify(normalMap);
+
     let material = new THREE.MeshStandardMaterial({
       aoMap,
       // map,
@@ -74,7 +86,22 @@ export class Sandcastle {
       normalMap,
       color: 0x9999ab,
     });
+
+    let materialBig = new THREE.MeshStandardMaterial({
+      aoMap: aoMapBig,
+      // map,
+      roughnessMap: roughnessMapBig,
+      normalMap: normalMapBig,
+      color: 0x9999ab,
+    });
+
     this.buildingMaterial = material;
+    this.buildingMaterialBig = materialBig;
+
+    let platformGeo = new THREE.CircleGeometry(3, 64);
+    let platform = new THREE.Mesh(platformGeo, this.buildingMaterial);
+    platform.rotateX(-Math.PI / 2);
+    this.scene.add(platform);
   }
 
   makeBuildings(count: number) {
@@ -86,6 +113,7 @@ export class Sandcastle {
 
       this.scene.add(mesh);
       const bigMesh = mesh.clone();
+      bigMesh.material = this.buildingMaterialBig!;
       this.scene.add(bigMesh);
       bigMesh.scale.set(this.bigScale, this.bigScale, this.bigScale);
       this.buildings.push({
