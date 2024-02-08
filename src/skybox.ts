@@ -4,7 +4,7 @@ import { EquirectangularReflectionMapping } from 'three';
 
 export async function loadSkybox(scene: THREE.Scene) {
   const hdrLoader = new RGBELoader();
-  const envMap = await hdrLoader.loadAsync('./assets/industrial_sunset_puresky_4k.hdr');
+  const envMap = await hdrLoader.loadAsync('industrial_sunset_puresky_4k.hdr');
   envMap.mapping = EquirectangularReflectionMapping;
 
   // const height = 15;
