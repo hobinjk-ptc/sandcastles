@@ -20,8 +20,8 @@ export class Sandcastle {
   ground: THREE.Mesh;
   groundWidth = 1.2;
   groundDepth = 1.2;
-  groundWidthSegments = 32;
-  groundDepthSegments = 32;
+  groundWidthSegments = 16;
+  groundDepthSegments = 16;
   // bigScale = 80000;
   bigScale = 900 / 1.2;
   durationScale = 120000;

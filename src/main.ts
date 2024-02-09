@@ -21,7 +21,7 @@ async function main() {
   const sandcastle = new Sandcastle(scene);
   await sandcastle.loadBuildingMaterial();
 
-  sandcastle.makeBuildings(10);
+  sandcastle.makeBuildings(8);
 
   const renderer = new THREE.WebGLRenderer({antialias: true});
   renderer.setPixelRatio(window.devicePixelRatio);
