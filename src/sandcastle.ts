@@ -46,6 +46,7 @@ export class Sandcastle {
     this.ground = new THREE.Mesh(groundGeo, groundMaterial);
     this.ground.rotateX(-Math.PI / 2);
     this.ground.position.y = 1.2;
+    this.ground.position.z = -1.2;
 
     this.scene.add(this.ground);
   }
@@ -113,7 +114,11 @@ export class Sandcastle {
       1 / this.bigScale,
       1 / this.bigScale
     );
-    smallPlatform.position.set(0, 1.25, 0);
+    smallPlatform.position.set(
+      this.ground.position.x,
+      this.ground.position.y + 0.05,
+      this.ground.position.z
+    );
     this.scene.add(smallPlatform);
   }
 
