@@ -71,8 +71,8 @@ export class Sandcastle {
     const normalMap = await exrLoader.loadAsync('asphalt_04_nor_gl_1k.exr');
     const biggify = (texture: THREE.Texture) => {
       let texBig = texture.clone();
-      texBig.wrapS = THREE.RepeatWrapping;
-      texBig.wrapT = THREE.RepeatWrapping;
+      texBig.wrapS = THREE.MirroredRepeatWrapping;
+      texBig.wrapT = THREE.MirroredRepeatWrapping;
       let texScale = Math.min(Math.floor(this.bigScale / 2), 100000);
       texBig.repeat.set(texScale, texScale);
       return texBig;
