@@ -73,7 +73,8 @@ export class Sandcastle {
       let texBig = texture.clone();
       texBig.wrapS = THREE.RepeatWrapping;
       texBig.wrapT = THREE.RepeatWrapping;
-      texBig.repeat.set(100000, 100000);
+      let texScale = Math.min(Math.floor(this.bigScale / 2), 100000);
+      texBig.repeat.set(texScale, texScale);
       return texBig;
     };
     const aoMapBig = biggify(aoMap);
