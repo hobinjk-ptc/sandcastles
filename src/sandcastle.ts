@@ -22,7 +22,8 @@ export class Sandcastle {
   groundDepth = 1.2;
   groundWidthSegments = 32;
   groundDepthSegments = 32;
-  bigScale = 80000;
+  // bigScale = 80000;
+  bigScale = 900 / 1.2;
   durationScale = 120000;
 
   buildingMaterial: THREE.MeshStandardMaterial|undefined;
@@ -116,7 +117,7 @@ export class Sandcastle {
       bigMesh.material = this.buildingMaterialBig!;
       this.scene.add(bigMesh);
       let oneWidth = this.groundWidth / this.groundWidthSegments;
-      let bigWidth = this.bigScale * oneWidth - 12;
+      let bigWidth = this.bigScale * oneWidth - 6;
       // Scale adjusted down so that cubes don't intersect with home platform
       bigMesh.scale.set(
         bigWidth / oneWidth,
@@ -218,7 +219,7 @@ export class Sandcastle {
       let smallDiff = building.mesh.position.clone().sub(this.ground.position);
       smallDiff.multiplyScalar(this.bigScale);
       building.bigMesh.position.copy(smallDiff);
-      building.bigMesh.position.y = -10;
+      building.bigMesh.position.y = -1;
     }
   }
 }
