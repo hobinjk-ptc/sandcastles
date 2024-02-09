@@ -48,7 +48,7 @@ async function main() {
   }
 
   function animation(time: number) {
-    if (resizeRendererToDisplaySize(renderer)) {
+    if (!renderer.xr.isPresenting && resizeRendererToDisplaySize(renderer)) {
       const canvas = renderer.domElement;
       camera.aspect = canvas.clientWidth / canvas.clientHeight;
       camera.updateProjectionMatrix();
