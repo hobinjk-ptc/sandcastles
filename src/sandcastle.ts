@@ -29,6 +29,8 @@ export class Sandcastle {
   buildingMaterial: THREE.MeshStandardMaterial|undefined;
   buildingMaterialBig: THREE.MeshStandardMaterial|undefined;
 
+  platformRadius = 1.2;
+
   buildings: Array<Building> = [];
   lastUpdate = 0;
 
@@ -100,10 +102,19 @@ export class Sandcastle {
     this.buildingMaterial = material;
     this.buildingMaterialBig = materialBig;
 
-    let platformGeo = new THREE.CircleGeometry(3, 64);
+    let platformGeo = new THREE.CircleGeometry(this.platformRadius, 64);
     let platform = new THREE.Mesh(platformGeo, this.buildingMaterial);
     platform.rotateX(-Math.PI / 2);
     this.scene.add(platform);
+
+    let smallPlatform = platform.clone();
+    smallPlatform.scale.set(
+      1 / this.bigScale,
+      1 / this.bigScale,
+      1 / this.bigScale
+    );
+    smallPlatform.position.set(0, 1.25, 0);
+    this.scene.add(smallPlatform);
   }
 
   makeBuildings(count: number) {
@@ -118,7 +129,7 @@ export class Sandcastle {
       bigMesh.material = this.buildingMaterialBig!;
       this.scene.add(bigMesh);
       let oneWidth = this.groundWidth / this.groundWidthSegments;
-      let bigWidth = this.bigScale * oneWidth - 6;
+      let bigWidth = this.bigScale * oneWidth - this.platformRadius * 2.1;
       // Scale adjusted down so that cubes don't intersect with home platform
       bigMesh.scale.set(
         bigWidth / oneWidth,
@@ -139,11 +150,15 @@ export class Sandcastle {
     let x = this.sxToX(sx);
     let z = this.szToZ(sz);
     let oneWidth = this.groundWidth / this.groundWidthSegments;
-    let oneDepth = this.groundDepth / this.groundDepthSegments;
-    let cube = new THREE.BoxGeometry(oneWidth, oneDepth, oneWidth);
+    let bigWidth = this.bigScale * oneWidth - this.platformRadius * 2.1;
+    // Reflect the later adjustment we do to the big mesh in this small mesh
+    let oneWidthCube = bigWidth / this.bigScale;
+
+    let cube = new THREE.BoxGeometry(
+      oneWidthCube, oneWidthCube, oneWidthCube);
     let mesh = new THREE.Mesh(cube, this.buildingMaterial!);
     mesh.position.x = x + oneWidth / 2;
-    mesh.position.z = z + oneDepth / 2;
+    mesh.position.z = z + oneWidth / 2;
     mesh.position.y = this.ground.position.y + oneWidth / 2;
     return mesh;
   }
